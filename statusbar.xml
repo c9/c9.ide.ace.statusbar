@@ -3,6 +3,7 @@
       skin    = "bar-status" 
       skinset = "c9statusbar"
       class   = ""
+      zindex  = "10000"
       height  = "23"
       bottom  = "3"
       right   = "5">
