@@ -60,6 +60,9 @@ define(function(require, exports, module) {
                 var editor = e.editor;
                 var statusbar;
                 
+                if (editor.type != "ace")
+                    return;
+                
                 editor.on("draw", function(){
                     statusbar = new StatusBar(editor);
                 }, editor);
