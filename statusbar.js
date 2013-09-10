@@ -121,7 +121,7 @@ define(function(require, exports, module) {
                     }
                 }
                 
-                menu.on("prop.visible", update);
+                menu.on("propVisible", update);
                 update();
             });
             
@@ -194,7 +194,7 @@ define(function(require, exports, module) {
                     itmTabSize.setAttribute("value", getOption("tabSize"));
                 }
                 
-                menuTabs.on("prop.visible", update);
+                menuTabs.on("propVisible", update);
                 update();
             });
         });
@@ -249,7 +249,7 @@ define(function(require, exports, module) {
                 if (settings.getBool("user/ace/statusbar/@show"))
                     draw();
                 
-                editor.on("document.load", function(e){
+                editor.on("documentLoad", function(e){
                     var session = e.doc.getSession();
                     session.statusBar = plugin;
                     session.session.on("changeMode", function(e){
@@ -260,12 +260,12 @@ define(function(require, exports, module) {
                         }
                     });
                 }, plugin);
-                editor.on("document.activate", function(e){
+                editor.on("documentActivate", function(e){
                     var session = e.doc.getSession();
                     var mode    = session.session.syntax.uCaseFirst();
                     lblSyntax && lblSyntax.setAttribute("caption", mode);
                 }, plugin);
-                editor.on("document.unload", function(e){
+                editor.on("documentUnload", function(e){
                     delete e.doc.getSession().statusBar;
                 }, plugin);
             }
@@ -296,7 +296,7 @@ define(function(require, exports, module) {
                         bar.$ext.style.backgroundColor = bg;
                     }
                 }
-                editor.on("theme.change", setTheme);
+                editor.on("themeChange", setTheme);
                 
                 bar          = plugin.getElement("bar");
                 lblSelection = plugin.getElement("lblSelectionLength");
@@ -475,7 +475,7 @@ define(function(require, exports, module) {
     
     Move to minimap
     
-    ide.on("minimap.visibility", function(e) {
+    ide.on("minimapVisibility", function(e) {
                 if (e.visibility === "shown")
                     _self.offsetWidth = e.width;
                 else
