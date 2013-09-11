@@ -134,7 +134,7 @@ define(function(require, exports, module) {
                 function(){ setOption("tabSize", 4) },
                 function(){ setOption("tabSize", 8) },
                 function(){
-                    var tab = tabs.focussedPage;
+                    var tab = tabs.focussedTab;
                     if (!tab) return;
                     var session = tab.document.getSession();
                     aceWhitespace.detectIndentation(session.session);
@@ -147,7 +147,7 @@ define(function(require, exports, module) {
                 },
                 // Tabs to Spaces
                 function(){
-                    var tab = tabs.focussedPage;
+                    var tab = tabs.focussedTab;
                     if (!tab) return;
                     var session = tab.document.getSession();
                     aceWhitespace.convertIndentation(session.session, " ");
@@ -155,7 +155,7 @@ define(function(require, exports, module) {
                 },
                 // Spaces to Tabs
                 function(){
-                    var tab = tabs.focussedPage;
+                    var tab = tabs.focussedTab;
                     if (!tab) return;
                     var session = tab.document.getSession();
                     aceWhitespace.convertIndentation(session.session, "\t");
@@ -318,7 +318,7 @@ define(function(require, exports, module) {
                 lblSyntax.setAttribute("submenu", mnuSyntax);
                 lblSyntax.on("mousedown", function(){
                     if (editor.activeDocument)
-                        tabs.focusPage(editor.activeDocument.tab);
+                        tabs.focusTab(editor.activeDocument.tab);
                 });
         
                 // Click behavior for the labels
