@@ -80,8 +80,8 @@ define(function(require, exports, module) {
                     node = node.parentNode;
                 if (!node) return;
                 
-                var page = node.cloud9pane.getPage();
-                currentSession = page.document.getSession();
+                var tab = node.cloud9pane.getPage();
+                currentSession = tab.document.getSession();
             }
             
             function setOption(name, value){
@@ -134,9 +134,9 @@ define(function(require, exports, module) {
                 function(){ setOption("tabSize", 4) },
                 function(){ setOption("tabSize", 8) },
                 function(){
-                    var page = tabs.focussedPage;
-                    if (!page) return;
-                    var session = page.document.getSession();
+                    var tab = tabs.focussedPage;
+                    if (!tab) return;
+                    var session = tab.document.getSession();
                     aceWhitespace.detectIndentation(session.session);
                     var useSoftTabs = session.session.getOption("useSoftTabs");
                     var tabSize     = session.session.getOption("tabSize");
@@ -147,17 +147,17 @@ define(function(require, exports, module) {
                 },
                 // Tabs to Spaces
                 function(){
-                    var page = tabs.focussedPage;
-                    if (!page) return;
-                    var session = page.document.getSession();
+                    var tab = tabs.focussedPage;
+                    if (!tab) return;
+                    var session = tab.document.getSession();
                     aceWhitespace.convertIndentation(session.session, " ");
                     session.statusBar.update();
                 },
                 // Spaces to Tabs
                 function(){
-                    var page = tabs.focussedPage;
-                    if (!page) return;
-                    var session = page.document.getSession();
+                    var tab = tabs.focussedPage;
+                    if (!tab) return;
+                    var session = tab.document.getSession();
                     aceWhitespace.convertIndentation(session.session, "\t");
                     session.statusBar.update();
                 }
@@ -318,7 +318,7 @@ define(function(require, exports, module) {
                 lblSyntax.setAttribute("submenu", mnuSyntax);
                 lblSyntax.on("mousedown", function(){
                     if (editor.activeDocument)
-                        tabs.focusPage(editor.activeDocument.page);
+                        tabs.focusPage(editor.activeDocument.tab);
                 });
         
                 // Click behavior for the labels
