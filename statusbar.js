@@ -76,11 +76,11 @@ define(function(require, exports, module) {
             var currentSession;
             function setCurrentSession(menu){
                 var node = menu.opener;
-                while (node && node.localName != "tab")
+                while (node && node.localName != "pane")
                     node = node.parentNode;
                 if (!node) return;
                 
-                var page = node.cloud9tab.getPage();
+                var page = node.cloud9pane.getPage();
                 currentSession = page.document.getSession();
             }
             
