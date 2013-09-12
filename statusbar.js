@@ -6,7 +6,7 @@
  */
 define(function(require, exports, module) {
     main.consumes = [
-        "plugin", "c9", "settings", "ui", "menus", "ace", "gotoline", "tabs"
+        "plugin", "c9", "settings", "ui", "menus", "ace", "gotoline", "tabManager"
     ];
     main.provides = ["acestatus"];
     return main;
@@ -16,7 +16,7 @@ define(function(require, exports, module) {
         var Plugin    = imports.plugin;
         var settings  = imports.settings;
         var ui        = imports.ui;
-        var tabs      = imports.tabs;
+        var tabs      = imports.tabManager;
         var menus     = imports.menus;
         var gotoline  = imports.gotoline;
         var aceHandle = imports.ace;

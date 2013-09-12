@@ -32,7 +32,7 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
             defaultEditor: "ace"
         },
         "plugins/c9.ide.editors/editor",
-        "plugins/c9.ide.editors/tabs",
+        "plugins/c9.ide.editors/tabmanager",
         "plugins/c9.ide.editors/pane",
         "plugins/c9.ide.editors/tab",
         "plugins/c9.ide.ace/ace",
@@ -61,7 +61,7 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
             setup    : expect.html.mocked
         },
         {
-            consumes : ["tabs", "ace"],
+            consumes : ["tabManager", "ace"],
             provides : [],
             setup    : main
         }
@@ -72,7 +72,7 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
     });
     
     function main(options, imports, register) {
-        var tabs    = imports.tabs;
+        var tabs    = imports.tabManager;
         var ace     = imports.ace;
         
         function getTabHtml(tab){
