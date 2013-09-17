@@ -19,7 +19,10 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
         "plugins/c9.core/http",
         "plugins/c9.core/util",
         "plugins/c9.ide.ui/lib_apf",
-        "plugins/c9.core/settings",
+        {
+            packagePath: "plugins/c9.core/settings",
+            testing: true
+        },
         {
             packagePath  : "plugins/c9.ide.ui/ui",
             staticPrefix : "plugins/c9.ide.ui"
@@ -75,7 +78,7 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
         var ace     = imports.ace;
         
         function getPageHtml(page){
-            return page.tab.aml.getPage("editor::" + page.editorType).$ext
+            return page.tab.aml.getPage("editor::" + page.editorType).$ext;
         }
         
         expect.html.setConstructor(function(page){
