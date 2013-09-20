@@ -49,6 +49,7 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
                 "path": "/smith.io/server"
             }
         },
+        "plugins/c9.vfs.client/endpoint.standalone",
         "plugins/c9.ide.auth/auth",
         "plugins/c9.fs/fs",
         
@@ -56,7 +57,7 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
         {
             consumes : ["apf", "ui"],
             provides : [
-                "commands", "menus", "layout", "watcher", 
+                "commands", "menus", "layout", "watcher",
                 "save", "preferences", "anims", "gotoline", "clipboard"
             ],
             setup    : expect.html.mocked
