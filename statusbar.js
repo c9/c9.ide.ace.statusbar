@@ -6,17 +6,17 @@
  */
 define(function(require, exports, module) {
     main.consumes = [
-        "plugin", "c9", "settings", "ui", "menus", "ace", "gotoline", "tabs"
+        "Plugin", "c9", "settings", "ui", "menus", "ace", "gotoline", "tabManager"
     ];
     main.provides = ["acestatus"];
     return main;
 
     function main(options, imports, register) {
         var c9        = imports.c9;
-        var Plugin    = imports.plugin;
+        var Plugin    = imports.Plugin;
         var settings  = imports.settings;
         var ui        = imports.ui;
-        var tabs      = imports.tabs;
+        var tabs      = imports.tabManager;
         var menus     = imports.menus;
         var gotoline  = imports.gotoline;
         var aceHandle = imports.ace;
@@ -76,12 +76,12 @@ define(function(require, exports, module) {
             var currentSession;
             function setCurrentSession(menu){
                 var node = menu.opener;
-                while (node && node.localName != "tab")
+                while (node && node.localName != "pane")
                     node = node.parentNode;
                 if (!node) return;
                 
-                var page = node.cloud9tab.getPage();
-                currentSession = page.document.getSession();
+                var tab = node.cloud9pane.getPage();
+                currentSession = tab.document.getSession();
             }
             
             function setOption(name, value){
@@ -121,7 +121,7 @@ define(function(require, exports, module) {
                     }
                 }
                 
-                menu.on("prop.visible", update);
+                menu.on("propVisible", update);
                 update();
             });
             
@@ -134,9 +134,9 @@ define(function(require, exports, module) {
                 function(){ setOption("tabSize", 4) },
                 function(){ setOption("tabSize", 8) },
                 function(){
-                    var page = tabs.focussedPage;
-                    if (!page) return;
-                    var session = page.document.getSession();
+                    var tab = tabs.focussedTab;
+                    if (!tab) return;
+                    var session = tab.document.getSession();
                     aceWhitespace.detectIndentation(session.session);
                     var useSoftTabs = session.session.getOption("useSoftTabs");
                     var tabSize     = session.session.getOption("tabSize");
@@ -147,17 +147,17 @@ define(function(require, exports, module) {
                 },
                 // Tabs to Spaces
                 function(){
-                    var page = tabs.focussedPage;
-                    if (!page) return;
-                    var session = page.document.getSession();
+                    var tab = tabs.focussedTab;
+                    if (!tab) return;
+                    var session = tab.document.getSession();
                     aceWhitespace.convertIndentation(session.session, " ");
                     session.statusBar.update();
                 },
                 // Spaces to Tabs
                 function(){
-                    var page = tabs.focussedPage;
-                    if (!page) return;
-                    var session = page.document.getSession();
+                    var tab = tabs.focussedTab;
+                    if (!tab) return;
+                    var session = tab.document.getSession();
                     aceWhitespace.convertIndentation(session.session, "\t");
                     session.statusBar.update();
                 }
@@ -194,7 +194,7 @@ define(function(require, exports, module) {
                     itmTabSize.setAttribute("value", getOption("tabSize"));
                 }
                 
-                menuTabs.on("prop.visible", update);
+                menuTabs.on("propVisible", update);
                 update();
             });
         });
@@ -249,7 +249,7 @@ define(function(require, exports, module) {
                 if (settings.getBool("user/ace/statusbar/@show"))
                     draw();
                 
-                editor.on("document.load", function(e){
+                editor.on("documentLoad", function(e){
                     var session = e.doc.getSession();
                     session.statusBar = plugin;
                     session.session.on("changeMode", function(e){
@@ -260,12 +260,12 @@ define(function(require, exports, module) {
                         }
                     });
                 }, plugin);
-                editor.on("document.activate", function(e){
+                editor.on("documentActivate", function(e){
                     var session = e.doc.getSession();
                     var mode    = session.session.syntax.uCaseFirst();
                     lblSyntax && lblSyntax.setAttribute("caption", mode);
                 }, plugin);
-                editor.on("document.unload", function(e){
+                editor.on("documentUnload", function(e){
                     delete e.doc.getSession().statusBar;
                 }, plugin);
             }
@@ -296,7 +296,7 @@ define(function(require, exports, module) {
                         bar.$ext.style.backgroundColor = bg;
                     }
                 }
-                editor.on("theme.change", setTheme);
+                editor.on("themeChange", setTheme);
                 
                 bar          = plugin.getElement("bar");
                 lblSelection = plugin.getElement("lblSelectionLength");
@@ -318,7 +318,7 @@ define(function(require, exports, module) {
                 lblSyntax.setAttribute("submenu", mnuSyntax);
                 lblSyntax.on("mousedown", function(){
                     if (editor.activeDocument)
-                        tabs.focusPage(editor.activeDocument.page);
+                        tabs.focusTab(editor.activeDocument.tab);
                 });
         
                 // Click behavior for the labels
@@ -432,7 +432,7 @@ define(function(require, exports, module) {
             /**
              * Draws the file tree
              * @event afterfilesave Fires after a file is saved
-             *   object:
+             * @param {Object} e
              *     node     {XMLNode} description
              *     oldpath  {String} description
              **/
@@ -475,7 +475,7 @@ define(function(require, exports, module) {
     
     Move to minimap
     
-    ide.on("minimap.visibility", function(e) {
+    ide.on("minimapVisibility", function(e) {
                 if (e.visibility === "shown")
                     _self.offsetWidth = e.width;
                 else
