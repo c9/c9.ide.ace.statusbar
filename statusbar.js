@@ -76,7 +76,7 @@ define(function(require, exports, module) {
             var currentSession;
             function setCurrentSession(menu){
                 var node = menu.opener;
-                while (node && node.localName != "pane")
+                while (node && node.localName != "tab")
                     node = node.parentNode;
                 if (!node) return;
                 
