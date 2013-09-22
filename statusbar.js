@@ -121,7 +121,7 @@ define(function(require, exports, module) {
                     }
                 }
                 
-                menu.on("propVisible", update);
+                menu.on("prop.visible", update);
                 update();
             });
             
@@ -194,7 +194,7 @@ define(function(require, exports, module) {
                     itmTabSize.setAttribute("value", getOption("tabSize"));
                 }
                 
-                menuTabs.on("propVisible", update);
+                menuTabs.on("prop.visible", update);
                 update();
             });
         });
