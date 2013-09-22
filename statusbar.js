@@ -80,7 +80,7 @@ define(function(require, exports, module) {
                     node = node.parentNode;
                 if (!node) return;
                 
-                var tab = node.cloud9pane.getPage();
+                var tab = node.cloud9pane.getTab();
                 currentSession = tab.document.getSession();
             }
             
