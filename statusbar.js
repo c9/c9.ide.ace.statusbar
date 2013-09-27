@@ -1,14 +1,9 @@
-/**
- * Editor status bar for Cloud9 IDE
- *
- * @copyright 2012, Cloud9 IDE, Inc.
- * @license GPLv3 <http://www.gnu.org/licenses/gpl.txt>
- */
 define(function(require, exports, module) {
     main.consumes = [
-        "Plugin", "c9", "settings", "ui", "menus", "ace", "gotoline", "tabManager"
+        "Plugin", "c9", "settings", "ui", "menus", "ace", 
+        "ace.gotoline", "tabManager"
     ];
-    main.provides = ["acestatus"];
+    main.provides = ["ace.status"];
     return main;
 
     function main(options, imports, register) {
@@ -18,7 +13,7 @@ define(function(require, exports, module) {
         var ui        = imports.ui;
         var tabs      = imports.tabManager;
         var menus     = imports.menus;
-        var gotoline  = imports.gotoline;
+        var gotoline  = imports["ace.gotoline"];
         var aceHandle = imports.ace;
         
         var skin    = require("text!./skin.xml");
@@ -35,6 +30,7 @@ define(function(require, exports, module) {
         var handle     = new Plugin("Ajax.org", deps);
         var handleEmit = handle.getEmitter();
         
+        var statusbars = {};
         var menuItem, menu, menuTabs;
         
         handle.on("load", function(){
@@ -61,7 +57,7 @@ define(function(require, exports, module) {
                 var statusbar;
                 
                 editor.on("draw", function(){
-                    statusbar = new StatusBar(editor);
+                    statusbar = new Statusbar(editor);
                 }, editor);
                 editor.on("unload", function h2(){
                     if (statusbar) statusbar.unload();
@@ -199,8 +195,10 @@ define(function(require, exports, module) {
             });
         });
         
+        /***** Methods *****/
+        
         var drawn = false;
-        handle.draw = function(){
+        function draw(){
             if (drawn) return;
             drawn = true;
             
@@ -212,18 +210,63 @@ define(function(require, exports, module) {
                 "icon-path"  : options.staticPrefix + "/icons/"
             }, handle);
         };
+        
+        function getStatusbar(editor){
+            return statusbars[editor.name];
+        }
+        
+        function show(){
+            settings.set("user/ace/statusbar/@show", "true");
+        }
+        
+        function hide(){
+            settings.set("user/ace/statusbar/@show", "false");
+        }
+        
+        /***** Register and define API *****/
+        
+        /**
+         * Manages the status bar instances for ace.
+         * @singleton
+         **/
+        handle.freezePublicAPI({
+            /**
+             * Show all the status bars.
+             */
+            show : show,
+            
+            /**
+             * Hide all the status bars.
+             */
+            hide : hide,
+            
+            /**
+             * Retrieve the status bar that belongs to an ace editor.
+             * @param {Editor} ace  The ace editor the status bar belongs to.
+             * @return {ace.Statusbar}
+             */
+            getStatusbar : getStatusbar,
+            
+            /**
+             * Inserts CSS for the statusbar.
+             * @private
+             */
+            draw : draw
+        });
             
         /***** Initialization *****/
         
         var counter = 0;
         
-        function StatusBar(editor){
+        function Statusbar(editor){
             var plugin = new Plugin("Ajax.org", deps);
             var emit   = plugin.getEmitter();
             
             var showRange;
             
             var bar, lblSelection, lblStatus, lblRowCol, lblTabs, lblSyntax; // ui elements
+            
+            statusbars[editor.name] = plugin;
             
             var loaded = false;
             function load(){
@@ -402,16 +445,6 @@ define(function(require, exports, module) {
                 lblStatus.setAttribute("caption", status);
             }
             
-            /***** Methods *****/
-            
-            function show(){
-                settings.set("user/ace/statusbar/@show", "true");
-            }
-            
-            function hide(){
-                settings.set("user/ace/statusbar/@show", "false");
-            }
-            
             /***** Lifecycle *****/
             
             plugin.on("load", function(){
@@ -430,22 +463,12 @@ define(function(require, exports, module) {
             /***** Register and define API *****/
             
             /**
-             * Draws the file tree
-             * @event afterfilesave Fires after a file is saved
-             * @param {Object} e
-             *     node     {XMLNode} description
-             *     oldpath  {String} description
+             * The status bar for ace editors.
+             * @class ace.Statusbar
              **/
             plugin.freezePublicAPI({
                 /**
-                 */
-                show : show,
-                
-                /**
-                 */
-                hide : hide,
-                
-                /**
+                 * Redraw the display of the statusbar
                  */
                 update : updateStatus
             });
@@ -456,31 +479,7 @@ define(function(require, exports, module) {
         }
         
         register(null, {
-            acestatus : handle
+            "ace.status" : handle
         });
     }
 });
-
-/* Move to VIM mode
-
-            vim.on("changeMode", function(e) {
-                if (!window.lblInsertActive)
-                    return;
-    
-                if (e.mode === "insert")
-                    lblInsertActive.show();
-                else
-                    lblInsertActive.hide();
-            });
-    
-    Move to minimap
-    
-    ide.on("minimapVisibility", function(e) {
-                if (e.visibility === "shown")
-                    _self.offsetWidth = e.width;
-                else
-                    _self.offsetWidth = 0;
-    
-                _self.setPosition();
-            });
-*/
