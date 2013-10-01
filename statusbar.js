@@ -243,7 +243,7 @@ define(function(require, exports, module) {
             /**
              * Retrieve the status bar that belongs to an ace editor.
              * @param {Editor} ace  The ace editor the status bar belongs to.
-             * @return {ace.Statusbar}
+             * @return {ace.status.Statusbar}
              */
             getStatusbar : getStatusbar,
             
@@ -464,7 +464,7 @@ define(function(require, exports, module) {
             
             /**
              * The status bar for ace editors.
-             * @class ace.Statusbar
+             * @class ace.status.Statusbar
              **/
             plugin.freezePublicAPI({
                 /**
