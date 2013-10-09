@@ -53,6 +53,9 @@ define(function(require, exports, module) {
             menus.addItemByPath("View/Status Bar", menuItem, 600, handle);
             
             aceHandle.on("create", function(e){
+                if (e.editor.type != "ace")
+                    return;
+                
                 var editor = e.editor;
                 var statusbar;
                 
