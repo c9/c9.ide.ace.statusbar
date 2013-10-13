@@ -301,7 +301,7 @@ define(function(require, exports, module) {
                     session.session.on("changeMode", function(e){
                         var acesession = session.session;
                         if (acesession) {
-                            var mode = acesession.syntax.uCaseFirst();
+                            var mode = (acesession.syntax || "text").uCaseFirst();
                             lblSyntax && lblSyntax.setAttribute("caption", mode);
                         }
                     });
