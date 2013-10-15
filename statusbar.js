@@ -334,7 +334,7 @@ define(function(require, exports, module) {
                     var cssClass = theme.cssClass;
                     var isDark   = theme.isDark;
                     
-                    var bg = ui.getStyleRule("." + cssClass, "background-color");
+                    var bg = ui.getStyleRule("." + cssClass, "backgroundColor");
                     
                     bar.setAttribute("class", isDark ? "ace_dark" : "");
                     if (bg) {
