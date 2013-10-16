@@ -298,19 +298,9 @@ define(function(require, exports, module) {
                 editor.on("documentLoad", function(e){
                     var session = e.doc.getSession();
                     session.statusBar = plugin;
-                    session.session.on("changeMode", function(e){
-                        var acesession = session.session;
-                        if (acesession) {
-                            var mode = (acesession.syntax || "text").uCaseFirst();
-                            lblSyntax && lblSyntax.setAttribute("caption", mode);
-                        }
-                    });
+                    session.session.on("changeMode", function(e){ statusUpdate.schedule(); });
                 }, plugin);
-                editor.on("documentActivate", function(e){
-                    var session = e.doc.getSession();
-                    var mode    = session.session.syntax.uCaseFirst();
-                    lblSyntax && lblSyntax.setAttribute("caption", mode);
-                }, plugin);
+                editor.on("documentActivate", function(e){ statusUpdate.schedule(); }, plugin);
                 editor.on("documentUnload", function(e){
                     delete e.doc.getSession().statusBar;
                 }, plugin);
@@ -381,10 +371,8 @@ define(function(require, exports, module) {
                 var ace = editor.ace;
                 if (!ace.$hasStatusBar) {
                     // Throttle UI updates
-                    var selStatusUpdate = lang.delayedCall(updateSelStatus, 100);
-                    var statusUpdate    = lang.delayedCall(updateStatus, 100);                    
-                    ace.on("changeSelection", function() {selStatusUpdate.schedule()});
-                    ace.on("changeStatus", function() {statusUpdate.schedule()});
+                    ace.on("changeSelection", function() { selStatusUpdate.schedule() });
+                    ace.on("changeStatus", function() { statusUpdate.schedule() });
                     ace.renderer.on("scrollbarVisibilityChanged", function(e, renderer) {
                         bar.$ext.style.right = renderer.scrollBarV.getWidth() + 5 + "px";
                         bar.$ext.style.bottom = renderer.scrollBarH.getHeight() + 3 + "px";
@@ -400,6 +388,9 @@ define(function(require, exports, module) {
                 
                 emit("draw");
             }
+            
+            var selStatusUpdate = lang.delayedCall(updateSelStatus, 100);
+            var statusUpdate    = lang.delayedCall(updateStatus, 100);
             
             /***** Helper Functions *****/
             
@@ -446,6 +437,9 @@ define(function(require, exports, module) {
                     status = "REC";
                     
                 lblStatus.setAttribute("caption", status);
+                
+                var caption = aceHandle.getSyntaxCaption(ace.session.syntax);
+                lblSyntax && lblSyntax.setAttribute("caption", caption);
             }
             
             /***** Lifecycle *****/
