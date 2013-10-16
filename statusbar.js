@@ -389,8 +389,8 @@ define(function(require, exports, module) {
                 emit("draw");
             }
             
-            var selStatusUpdate = lang.delayedCall(updateSelStatus, 100);
-            var statusUpdate    = lang.delayedCall(updateStatus, 100);
+            var selStatusUpdate = lang.delayedCall(updateSelStatus, 10);
+            var statusUpdate    = lang.delayedCall(updateStatus, 10);
             
             /***** Helper Functions *****/
             
