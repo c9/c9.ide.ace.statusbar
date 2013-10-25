@@ -126,7 +126,7 @@ define(function(require, exports, module) {
             
             // Menu Tab functionality
             var handlers = [
-                function(){ setOption("useSoftTabs", !this.checked) },
+                function(){ setOption("useSoftTabs", this.checked) },
                 function(){},
                 function(){ setOption("tabSize", 2) },
                 function(){ setOption("tabSize", 3) },
