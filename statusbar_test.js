@@ -18,6 +18,7 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
         "plugins/c9.core/http",
         "plugins/c9.core/util",
         "plugins/c9.ide.ui/lib_apf",
+        "plugins/c9.ide.ui/menus",
         {
             packagePath: "plugins/c9.core/settings",
             testing: true
@@ -53,7 +54,8 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
             consumes : ["apf", "ui", "Plugin"],
             provides : [
                 "commands", "menus", "layout", "watcher",
-                "save", "preferences", "anims", "gotoline", "clipboard"
+                "save", "preferences", "anims", "gotoline", "clipboard",
+                "dialog.alert", "auth.bootstrap", "ace.gotoline"
             ],
             setup    : expect.html.mocked
         },
