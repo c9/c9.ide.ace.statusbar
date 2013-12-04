@@ -364,7 +364,7 @@ define(function(require, exports, module) {
                 });
                 
                 lblRowCol.on("click", function(){
-                    gotoline.gotoline();
+                    gotoline.gotoline(null, null, true);
                 });
                 
                 // Hook into ace
