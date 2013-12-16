@@ -86,7 +86,6 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
             before(function(done){
                 apf.config.setProperty("allow-select", false);
                 apf.config.setProperty("allow-blur", false);
-                tabs.getPanes()[0].focus();
                 
                 bar.$ext.style.background = "rgba(220, 220, 220, 0.93)";
                 bar.$ext.style.position = "fixed";
@@ -96,7 +95,11 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
                 bar.$ext.style.height = "33%";
       
                 document.body.style.marginBottom = "33%";
-                done();
+                
+                tabs.on("ready", function(){
+                    tabs.getPanes()[0].focus();
+                    done();
+                })
             });
             
             describe("open", function(){
