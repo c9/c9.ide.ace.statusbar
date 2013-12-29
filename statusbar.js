@@ -314,7 +314,7 @@ define(function(require, exports, module) {
                 handle.draw();
                 
                 // Create UI elements
-                var htmlNode = editor.ace.container.parentNode.host;
+                var htmlNode = editor.aml; //ace.container.parentNode.host;
                 ui.insertMarkup(htmlNode, markup, plugin);
                 
                 function setTheme(e){
