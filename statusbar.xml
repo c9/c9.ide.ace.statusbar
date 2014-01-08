@@ -4,9 +4,8 @@
       skinset = "c9statusbar"
       class   = ""
       zindex  = "10000"
-      height  = "23"
-      bottom  = "3"
-      right   = "5">
+      style   = "position:absolute;right:5px;bottom:3px;"
+      height  = "23">
         <a:label id="lblSelectionLength" 
           caption = "" 
           style   = "cursor:pointer"
