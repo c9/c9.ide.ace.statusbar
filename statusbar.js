@@ -328,7 +328,7 @@ define(function(require, exports, module) {
                     
                     bar.setAttribute("class", isDark ? "ace_dark" : "");
                     if (bg) {
-                        bg = bg.replace(/rgb\((.*)\)/, "rgba($1, 0.9)");
+                        // bg = bg.replace(/rgb\((.*)\)/, "rgba($1, 0.9)");
                         bar.$ext.style.backgroundColor = bg;
                     }
                 }
