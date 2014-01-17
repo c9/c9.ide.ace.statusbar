@@ -423,6 +423,7 @@ define(function(require, exports, module) {
             
             function updateStatus() {
                 var ace = editor.ace;
+                if (!ace) return;
                 
                 updateSelStatus();
                 
