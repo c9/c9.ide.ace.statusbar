@@ -376,7 +376,7 @@ define(function(require, exports, module) {
                     ace.renderer.on("scrollbarVisibilityChanged", function(e, renderer) {
                         bar.$ext.style.right = renderer.scrollBarV.getWidth() + 5 + "px";
                         bar.$ext.style.bottom = renderer.scrollBarH.getHeight() + 3 + "px";
-                    });
+                    })(null, ace.renderer);
                     ace.$hasStatusBar = true;
                     
                     var theme = editor.theme;
