@@ -44,7 +44,7 @@ define(function(require, exports, module) {
             menuItem = new apf.item({
                 test : "1",
                 type : "check",
-                checked : "[{settings.model}::user/ace/statusbar/@show]"
+                checked : "user/ace/statusbar/@show"
                 // -> if you're looking for disabled, check the init function :-)
                 // the moment that someone clicks this thing well call preinit 
                 // (its already called if the user has it checked on IDE load)
