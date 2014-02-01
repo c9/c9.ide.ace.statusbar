@@ -3,17 +3,16 @@
       ref    = "{btnSbPrefs}"
       class  = "mnuSbPrefs"
       sticky = "false"
-      render = "runtime"
-      model  = "{settings.model}">
-        <a:item type="check" caption="Show Invisibles" checked="[user/ace/@showInvisibles]" />
-        <a:item type="check" caption="Show Gutter" checked="[user/ace/@showGutter]" />
-        <a:item type="check" caption="Auto-pair Brackets, Quotes, etc." checked="[user/ace/@behavioursEnabled]" />
+      render = "runtime">
+        <a:item type="check" caption="Show Invisibles" checked="user/ace/@showInvisibles" />
+        <a:item type="check" caption="Show Gutter" checked="user/ace/@showGutter" />
+        <a:item type="check" caption="Auto-pair Brackets, Quotes, etc." checked="user/ace/@behavioursEnabled" />
         <a:item type="check" caption="Wrap Lines" id="itmSbWrap" />
         <a:item type="check" caption="&#8627; to Viewport" id="itmSbWrapVP" disabled="{!this.previousSibling.checked}" />
         <a:divider />
         <a:hbox edge="0 5 2 23" align="center">
             <a:label flex="1" style="padding: 2px 2px 2px 0">Font Size</a:label>
-            <a:spinner value="[user/ace/@fontSize]" realtime="true" min="1" max="72" width="50" />
+            <a:spinner value="user/ace/@fontSize" realtime="true" min="1" max="72" width="50" />
         </a:hbox>
     </a:menu>
     
