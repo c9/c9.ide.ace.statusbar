@@ -418,7 +418,10 @@ define(function(require, exports, module) {
                 }
                 
                 var cursor = ace.selection.lead;
-                lblRowCol.setAttribute("caption", (cursor.row + 1) + ":" + (cursor.column + 1));
+                var columnText = (cursor.row + 1) + ":" + (cursor.column + 1);
+                if (ace.selection.rangeCount)
+                    columnText += " &#91;" + ace.selection.rangeCount + " ]";
+                lblRowCol.setAttribute("caption", columnText);
             }
             
             function updateStatus() {
