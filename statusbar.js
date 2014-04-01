@@ -41,7 +41,7 @@ define(function(require, exports, module) {
                     handleEmit("show");
             }, handle);
             
-            menuItem = new apf.item({
+            menuItem = new ui.item({
                 test : "1",
                 type : "check",
                 checked : "user/ace/statusbar/@show"
@@ -296,9 +296,15 @@ define(function(require, exports, module) {
                     draw();
                 
                 editor.on("documentLoad", function(e){
-                    var session = e.doc.getSession();
+                    var doc     = e.doc;
+                    var session = doc.getSession();
                     session.statusBar = plugin;
                     session.session.on("changeMode", function(e){ statusUpdate.schedule(); });
+                    
+                    if (!doc.hasValue())
+                        doc.once("setValue", function(){
+                            statusUpdate.schedule();
+                        }, doc);
                 }, plugin);
                 editor.on("documentActivate", function(e){ statusUpdate.schedule(); }, plugin);
                 editor.on("documentUnload", function(e){
