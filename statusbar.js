@@ -133,32 +133,26 @@ define(function(require, exports, module) {
                 function(){ setOption("tabSize", 4) },
                 function(){ setOption("tabSize", 8) },
                 function(){
-                    var tab = tabs.focussedTab;
-                    if (!tab) return;
-                    var session = tab.document.getSession();
-                    aceWhitespace.detectIndentation(session.session);
-                    var useSoftTabs = session.session.getOption("useSoftTabs");
-                    var tabSize     = session.session.getOption("tabSize");
+                    if (!currentSession) return;
+                    aceWhitespace.detectIndentation(currentSession.session);
+                    var useSoftTabs = currentSession.session.getOption("useSoftTabs");
+                    var tabSize     = currentSession.session.getOption("tabSize");
                     menuTabs.childNodes[0].setAttribute("checked", useSoftTabs);
                     if (tabSize < 9)
                         menuTabs.childNodes[tabSize + 1].setAttribute("selected", true);
-                    session.statusBar.update();
+                    currentSession.statusBar.update();
                 },
                 // Tabs to Spaces
                 function(){
-                    var tab = tabs.focussedTab;
-                    if (!tab) return;
-                    var session = tab.document.getSession();
-                    aceWhitespace.convertIndentation(session.session, " ");
-                    session.statusBar.update();
+                    if (!currentSession) return;
+                    aceWhitespace.convertIndentation(currentSession.session, " ");
+                    currentSession.statusBar.update();
                 },
                 // Spaces to Tabs
                 function(){
-                    var tab = tabs.focussedTab;
-                    if (!tab) return;
-                    var session = tab.document.getSession();
-                    aceWhitespace.convertIndentation(session.session, "\t");
-                    session.statusBar.update();
+                    if (!currentSession) return;
+                    aceWhitespace.convertIndentation(currentSession.session, "\t");
+                    currentSession.statusBar.update();
                 }
             ];
             
