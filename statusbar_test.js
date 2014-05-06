@@ -1,4 +1,4 @@
-/*global describe it before after  =*/
+/*global describe it before after = */
 
 "use client";
 
@@ -7,13 +7,13 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
     
     expect.setupArchitectTest([
         {
-            packagePath : "plugins/c9.core/c9",
-            workspaceId : "ubuntu/ip-10-35-77-180",
-            startdate   : new Date(),
-            debug       : true,
-            hosted      : true,
-            local       : false,
-            davPrefix   : "/"
+            packagePath: "plugins/c9.core/c9",
+            workspaceId: "ubuntu/ip-10-35-77-180",
+            startdate: new Date(),
+            debug: true,
+            hosted: true,
+            local: false,
+            davPrefix: "/"
         },
         
         "plugins/c9.core/ext",
@@ -27,8 +27,8 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
         },
         "plugins/c9.core/api.js",
         {
-            packagePath  : "plugins/c9.ide.ui/ui",
-            staticPrefix : "plugins/c9.ide.ui"
+            packagePath: "plugins/c9.ide.ui/ui",
+            staticPrefix: "plugins/c9.ide.ui"
         },
         "plugins/c9.ide.editors/document",
         "plugins/c9.ide.editors/undomanager",
@@ -43,8 +43,8 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
         "plugins/c9.ide.editors/tab",
         "plugins/c9.ide.ace/ace",
         {
-            packagePath  : "plugins/c9.ide.ace.statusbar/statusbar",
-            staticPrefix : "plugins/c9.ide.layout.classic"
+            packagePath: "plugins/c9.ide.ace.statusbar/statusbar",
+            staticPrefix: "plugins/c9.ide.layout.classic"
         },
         "plugins/c9.ide.keys/commands",
         "plugins/c9.fs/proc",
@@ -55,37 +55,37 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
         
         // Mock plugins
         {
-            consumes : ["apf", "ui", "Plugin"],
-            provides : [
+            consumes: ["apf", "ui", "Plugin"],
+            provides: [
                 "commands", "menus", "layout", "watcher",
                 "save", "preferences", "anims", "gotoline", "clipboard",
                 "dialog.alert", "auth.bootstrap", "info", "ace.gotoline",
                 "dialog.error"
             ],
-            setup    : expect.html.mocked
+            setup: expect.html.mocked
         },
         {
-            consumes : ["tabManager", "ace"],
-            provides : [],
-            setup    : main
+            consumes: ["tabManager", "ace"],
+            provides: [],
+            setup: main
         }
     ], architect);
     
     function main(options, imports, register) {
-        var tabs    = imports.tabManager;
-        var ace     = imports.ace;
+        var tabs = imports.tabManager;
+        var ace = imports.ace;
         
-        function getTabHtml(tab){
+        function getTabHtml(tab) {
             return tab.pane.aml.getPage("editor::" + tab.editorType).$ext
         }
         
-        expect.html.setConstructor(function(tab){
+        expect.html.setConstructor(function(tab) {
             if (typeof tab == "object")
                 return tab.$ext;
         });
         
         describe('statusbar', function() {
-            before(function(done){
+            before(function(done) {
                 apf.config.setProperty("allow-select", false);
                 apf.config.setProperty("allow-blur", false);
                 
@@ -108,10 +108,10 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
                 this.timeout(10000);
                 
                 it('should open a pane with just an editor', function(done) {
-                    tabs.openFile("/file.txt", function(err, tab){
+                    tabs.openFile("/file.txt", function(err, tab) {
                         expect(tabs.getTabs()).length(1);
                         
-                        var sb  = tab.document.getSession().statusBar;
+                        var sb = tab.document.getSession().statusBar;
                         var bar = sb.getElement("bar");
                         expect.html(bar, "rowcol").text("1:1");
                         
@@ -125,7 +125,7 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
                     });
                 });
                 it('should handle multiple documents in the same pane', function(done) {
-                    tabs.openFile("/listing.json", function(err, tab){
+                    tabs.openFile("/listing.json", function(err, tab) {
                         expect(tabs.getTabs()).length(2);
                         
                         tab.activate();
@@ -153,7 +153,7 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
                     }, 100);
                 });
 //                it('should remove the left pane from a horizontal split', function(done) {
-//                    var pane  = tabs.getPanes()[0];
+//                    var pane = tabs.getPanes()[0];
 //                    var tab = tabs.getPanes()[1].getTab();
 //                    pane.unload();
 //                    expect(tabs.getPanes()).length(1);
@@ -179,8 +179,8 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
             
             // @todo test split api and menu
             
-           if (!onload.remain){
-               after(function(done){
+           if (!onload.remain) {
+               after(function(done) {
                    tabs.unload();
                    
                    document.body.style.marginBottom = "";
