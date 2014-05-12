@@ -98,7 +98,7 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
       
                 document.body.style.marginBottom = "33%";
                 
-                tabs.on("ready", function(){
+                tabs.once("ready", function(){
                     tabs.getPanes()[0].focus();
                     done();
                 })

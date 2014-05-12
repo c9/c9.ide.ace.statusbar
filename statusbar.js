@@ -59,10 +59,10 @@ define(function(require, exports, module) {
                 var editor = e.editor;
                 var statusbar;
                 
-                editor.on("draw", function(){
+                editor.once("draw", function(){
                     statusbar = new Statusbar(editor);
                 }, editor);
-                editor.on("unload", function h2(){
+                editor.once("unload", function h2(){
                     if (statusbar) statusbar.unload();
                 }, editor);
             });
