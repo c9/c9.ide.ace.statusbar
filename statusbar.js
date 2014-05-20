@@ -85,7 +85,8 @@ define(function(require, exports, module) {
             
             function setOption(name, value) {
                 if (currentSession) {
-                    currentSession.session.setOption(name, value);
+                    if (currentSession.setOption)
+                        currentSession.setOption(name, value);
                     currentSession.statusBar.update();
                 }
             }
@@ -135,11 +136,7 @@ define(function(require, exports, module) {
                 function(){
                     if (!currentSession) return;
                     aceWhitespace.detectIndentation(currentSession.session);
-                    var useSoftTabs = currentSession.session.getOption("useSoftTabs");
-                    var tabSize = currentSession.session.getOption("tabSize");
-                    menuTabs.childNodes[0].setAttribute("checked", useSoftTabs);
-                    if (tabSize < 9)
-                        menuTabs.childNodes[tabSize + 1].setAttribute("selected", true);
+                    currentSession.setOption("guessTabSize", true);
                     currentSession.statusBar.update();
                 },
                 // Tabs to Spaces
