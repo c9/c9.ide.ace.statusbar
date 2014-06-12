@@ -393,7 +393,7 @@ define(function(require, exports, module) {
             
             function updateSelStatus(){
                 var ace = editor.ace;
-                if (!ace) return;
+                if (!ace || !drawn) return;
                 
                 if (!ace.selection.isEmpty()) {
                     var range = ace.getSelectionRange();
@@ -423,7 +423,7 @@ define(function(require, exports, module) {
             
             function updateStatus() {
                 var ace = editor.ace;
-                if (!ace) return;
+                if (!ace || !drawn) return;
                 
                 updateSelStatus();
                 
