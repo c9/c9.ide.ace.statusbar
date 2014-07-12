@@ -36,9 +36,6 @@ define(function(require, exports, module) {
         handle.on("load", function(){
             settings.on("read", function(e) {
                 settings.setDefaults("user/ace/statusbar", [["show", "true"]]);
-                
-                if (settings.getBool("user/ace/statusbar/@show"))
-                    handleEmit("show");
             }, handle);
             
             menuItem = new ui.item({
@@ -203,7 +200,7 @@ define(function(require, exports, module) {
                 "media-path" : options.staticPrefix + "/images/",
                 "icon-path"  : options.staticPrefix + "/icons/"
             }, handle);
-        };
+        }
         
         function getStatusbar(editor) {
             return statusbars[editor.name];
@@ -280,8 +277,6 @@ define(function(require, exports, module) {
                 }
                 
                 settings.on("user/ace/statusbar", updateBarVisible, plugin);
-                
-                handle.on("show", show);
                 
                 if (settings.getBool("user/ace/statusbar/@show"))
                     draw();
