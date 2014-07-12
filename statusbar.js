@@ -28,8 +28,6 @@ define(function(require, exports, module) {
         // Set up the generic handle
         var deps = main.consumes.slice(0, main.consumes.length - 1);
         var handle = new Plugin("Ajax.org", deps);
-        var handleEmit = handle.getEmitter();
-        
         var statusbars = {};
         var menuItem, menu, menuTabs;
         
@@ -386,9 +384,9 @@ define(function(require, exports, module) {
             
             /***** Helper Functions *****/
             
-            function updateSelStatus(){
+            function updateSelStatus() {
                 var ace = editor.ace;
-                if (!ace || !drawn) return;
+                if (!ace || !drawn || !ace.selection) return;
                 
                 if (!ace.selection.isEmpty()) {
                     var range = ace.getSelectionRange();
