@@ -26,8 +26,7 @@ define(function(require, exports, module) {
         /***** Generic Load *****/
         
         // Set up the generic handle
-        var deps = main.consumes.slice(0, main.consumes.length - 1);
-        var handle = new Plugin("Ajax.org", deps);
+        var handle = new Plugin("Ajax.org", main.consumes);
         var statusbars = {};
         var menuItem, menu, menuTabs;
         
@@ -248,7 +247,7 @@ define(function(require, exports, module) {
         var counter = 0;
         
         function Statusbar(editor) {
-            var plugin = new Plugin("Ajax.org", deps);
+            var plugin = new Plugin("Ajax.org", main.consumes);
             var emit = plugin.getEmitter();
             
             var showRange;
