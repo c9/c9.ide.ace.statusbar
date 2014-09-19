@@ -102,16 +102,20 @@ define(function(require, exports, module) {
                 itmSbWrapVP.on("click", function(){
                     setOption("wrap", itmSbWrap.checked
                         ? itmSbWrapVP.checked || "printMargin"
-                        : false);
+                        : !itmSbWrapVP.checked || "printMargin");
                 });
                 
                 function update(e) {
                     if (!e || e.value) {
                         setCurrentSession(menu);
+                        // add padding to wrap to viewport menu item
+                        itmSbWrapVP.$ext.style.marginLeft = 18 + "px";
+                        itmSbWrapVP.$ext.style.position = "relative";
                         
                         var wrap = getOption("wrap");
                         itmSbWrap.setAttribute("checked", !ui.isFalse(wrap));
                         itmSbWrapVP.setAttribute("checked", wrap != "printMargin");
+                        itmSbWrapVP.setAttribute("disabled", ui.isFalse(wrap));
                     }
                 }
                 
