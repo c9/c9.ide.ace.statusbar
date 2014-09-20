@@ -8,7 +8,7 @@
         <a:item type="check" caption="Show Gutter" checked="user/ace/@showGutter" />
         <a:item type="check" caption="Auto-pair Brackets, Quotes, etc." checked="user/ace/@behavioursEnabled" />
         <a:item type="check" caption="Wrap Lines" id="itmSbWrap" />
-        <a:item type="check" caption="&#8627; to Viewport" id="itmSbWrapVP" disabled="{!this.previousSibling.checked}" />
+        <a:item type="check" style="margin-left:18px;position:relative" caption="&#8627; to Print Margin" id="itmSbWrapPM" />
         <a:divider />
         <a:hbox edge="0 5 2 23" align="center">
             <a:label flex="1" style="padding: 2px 2px 2px 0">Font Size</a:label>
