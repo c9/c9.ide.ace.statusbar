@@ -92,17 +92,17 @@ define(function(require, exports, module) {
             // Checkboxes
             menu.on("afterrender", function(e) {
                 var itmSbWrap = window.itmSbWrap;
-                var itmSbWrapVP = window.itmSbWrapVP;
+                var itmSbWrapPM = window.itmSbWrapPM;
                 
                 itmSbWrap.on("click", function(){
                     setOption("wrap", itmSbWrap.checked
-                        ? itmSbWrapVP.checked || "printMargin"
+                        ? itmSbWrapPM.checked ? "printMargin" : true
                         : false);
                 });
-                itmSbWrapVP.on("click", function(){
-                    setOption("wrap", itmSbWrap.checked
-                        ? itmSbWrapVP.checked || "printMargin"
-                        : false);
+                itmSbWrapPM.on("click", function(){
+                    setOption("wrap", itmSbWrapPM.checked
+                        ? "printMargin"
+                        : itmSbWrap.checked);
                 });
                 
                 function update(e) {
@@ -111,7 +111,7 @@ define(function(require, exports, module) {
                         
                         var wrap = getOption("wrap");
                         itmSbWrap.setAttribute("checked", !ui.isFalse(wrap));
-                        itmSbWrapVP.setAttribute("checked", wrap != "printMargin");
+                        itmSbWrapPM.setAttribute("checked", wrap == "printMargin");
                     }
                 }
                 
