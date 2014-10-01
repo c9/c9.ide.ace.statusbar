@@ -461,7 +461,7 @@ define(function(require, exports, module) {
                 update: updateStatus
             });
             
-            plugin.load(Plugin.uid("acestatus"));
+            plugin.load(null, "acestatus");
             
             return plugin;
         }
