@@ -244,8 +244,6 @@ define(function(require, exports, module) {
             
         /***** Initialization *****/
         
-        var counter = 0;
-        
         function Statusbar(editor) {
             var plugin = new Plugin("Ajax.org", main.consumes);
             var emit = plugin.getEmitter();
@@ -463,7 +461,7 @@ define(function(require, exports, module) {
                 update: updateStatus
             });
             
-            plugin.load("acestatus" + counter++);
+            plugin.load(Plugin.uid("acestatus"));
             
             return plugin;
         }
