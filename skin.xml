@@ -20,11 +20,13 @@
             }
 
             .bar-status .label {
-                color: rgb(139, 139, 139);
-                padding-left: 1px;
+                color: @ace-status-color;
+                padding: @ace-status-padding;
                 overflow: visible;
                 text-shadow: 0px 1px 0px rgba(255,255,255,0.5);
                 .font-smoothing(true);
+                font-weight: @ace-status-font-weight;
+                font-size: @ace-status-font-size;
             }
 
             .bar-status.ace_dark .label {
