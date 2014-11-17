@@ -73,6 +73,7 @@
                 user-select         : none;
                 background-position : 0 0;
                 background-repeat   : no-repeat;
+                .image-2x(@ace-status-icon-image, @ace-status-icon-image-width, @ace-status-icon-image-height, no-repeat, true);
             }
             .btn-statusbar-iconOver {
                 background-position : 0 -23px;
