@@ -44,7 +44,11 @@
             }
             
             .bar-status .label:hover{
-                text-decoration : underline;
+                text-decoration : @ace-status-label-hover-decoration;
+                color : @ace-status-label-hover-color;
+            }
+            .bar-status .label.labelDown{
+                color : @ace-status-label-active-color;
             }
             
             .bar-status .nounderline:hover{
@@ -73,6 +77,7 @@
                 user-select         : none;
                 background-position : 0 0;
                 background-repeat   : no-repeat;
+                margin: @ace-status-icon-margin !important;
                 .image-2x(@ace-status-icon-image, @ace-status-icon-image-width, @ace-status-icon-image-height, no-repeat, true);
             }
             .btn-statusbar-iconOver {
