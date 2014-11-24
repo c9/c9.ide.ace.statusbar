@@ -421,10 +421,8 @@ define(function(require, exports, module) {
                     (ace.getOption("useSoftTabs") ? "Spaces" : "Tabs") + ": "
                       + ace.getOption("tabSize")); // "\\[" + + "\\]");
                 
-                var status = "";
-                if (ace.$vimModeHandler)
-                    status = ace.$vimModeHandler.getStatusText();
-                else if (ace.commands.recording)
+                var status = ace.keyBinding.getStatusText() || "";
+                if (ace.commands.recording)
                     status = "REC";
                     
                 lblStatus.setAttribute("caption", status);
