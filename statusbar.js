@@ -183,6 +183,19 @@ define(function(require, exports, module) {
             });
         });
         
+        handle.on("unload", function(){
+            drawn = false;
+            
+            Object.keys(statusbars).forEach(function(name){
+                statusbars[name].unload();
+            });
+            
+            statusbars = {};
+            menuItem = null;
+            menu = null;
+            menuTabs = null;
+        });
+        
         /***** Methods *****/
         
         var drawn = false;
