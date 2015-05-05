@@ -1,6 +1,5 @@
 <a:application xmlns:a="http://ajax.org/2005/aml">
     <a:menu id="menu"
-      ref    = "{btnSbPrefs}"
       class  = "mnuSbPrefs"
       sticky = "false"
       render = "runtime">
