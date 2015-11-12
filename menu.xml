@@ -24,8 +24,8 @@
         <a:item type="radio" caption="4" style="padding-left:35px" />
         <a:item type="radio" caption="8" style="padding-left:35px" />
         <a:divider />
-        <a:hbox edge="0 5 2 23" align="center">
-            <a:label style="padding: 2px 10px 2px 0" flex="1">Other</a:label>
+        <a:hbox edge="0 10 2 23" align="center">
+            <a:label style="padding: 2px 10px 2px 3px;flex:1 1 50px;">Other</a:label>
             <a:spinner id="itmTabSize" realtime="true" min="1" max="64" width="50" />
         </a:hbox>
         <a:divider />
