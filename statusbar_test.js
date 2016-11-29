@@ -1,4 +1,4 @@
-/*global describe it before after = */
+/*global describe it before after apf bar = */
 
 "use client";
 
@@ -98,54 +98,59 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
       
                 document.body.style.marginBottom = "33%";
                 
-                tabs.once("ready", function(){
+                tabs.once("ready", function() {
                     tabs.getPanes()[0].focus();
                     done();
-                })
+                });
             });
             
-            describe("open", function(){
+            describe("open", function() {
                 this.timeout(10000);
                 
                 it('should open a pane with just an editor', function(done) {
                     tabs.openFile("/file.txt", function(err, tab) {
+                        expect(!err);
                         expect(tabs.getTabs()).length(1);
-                        
-                        var sb = tab.document.getSession().statusBar;
-                        var bar = sb.getElement("bar");
-                        expect.html(bar, "rowcol").text("1:1");
-                        
-                        tab.document.editor.ace.selectAll();
-                        setTimeout(function(){
-                            expect.html(bar, "rowcol sel").text("2:1");
-                            expect.html(bar, "sel").text("23 Bytes");
+                        // statusbar is added only after editor draw event
+                        // TODO make this api easier to use
+                        setTimeout(function() {
+                            var sb = tab.document.getSession().statusBar;
+                            var bar = sb.getElement("bar");
+                            expect.html(bar, "rowcol").text("1:1");
                             
-                            done();
-                        }, 100);
+                            tab.document.editor.ace.selectAll();
+                            setTimeout(function() {
+                                expect.html(bar, "rowcol sel").text("2:1");
+                                expect.html(bar, "sel").text("23 Bytes");
+                                
+                                done();
+                            }, 10);
+                        });
                     });
                 });
                 it('should handle multiple documents in the same pane', function(done) {
                     tabs.openFile("/listing.json", function(err, tab) {
+                        expect(!err);
                         expect(tabs.getTabs()).length(2);
                         
                         tab.activate();
                         
-                        setTimeout(function(){
+                        setTimeout(function() {
                             var sb = tab.document.getSession().statusBar;
                             expect.html(sb.getElement("bar"), "caption").text("1:1");
                             
                             done();
-                        }, 100);
+                        }, 10);
                     });
                 });
             });
-            describe("split(), pane.unload()", function(){
+            describe("split(), pane.unload()", function() {
                 it('should split a pane horizontally, making the existing pane the left one', function(done) {
                     var pane = tabs.focussedTab.pane;
                     var righttab = pane.hsplit(true);
                     tabs.focussedTab.attachTo(righttab);
                     
-                    setTimeout(function(){
+                    setTimeout(function() {
                         expect.html(pane.aml, "pane").text("2:1");
                         expect.html(righttab.aml, "righttab").text("1:1");
                     
