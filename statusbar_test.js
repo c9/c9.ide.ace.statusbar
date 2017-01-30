@@ -76,7 +76,7 @@ require(["lib/architect/architect", "lib/chai/chai"], function (architect, chai)
         var ace = imports.ace;
         
         function getTabHtml(tab) {
-            return tab.pane.aml.getPage("editor::" + tab.editorType).$ext
+            return tab.pane.aml.getPage("editor::" + tab.editorType).$ext;
         }
         
         expect.html.setConstructor(function(tab) {

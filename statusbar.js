@@ -30,7 +30,7 @@ define(function(require, exports, module) {
         var statusbars = {};
         var menuItem, menu, menuTabs;
         
-        handle.on("load", function(){
+        handle.on("load", function() {
             settings.on("read", function(e) {
                 settings.setDefaults("user/ace/statusbar", [["show", "true"]]);
             }, handle);
@@ -53,10 +53,10 @@ define(function(require, exports, module) {
                 var editor = e.editor;
                 var statusbar;
                 
-                editor.once("draw", function(){
+                editor.once("draw", function() {
                     statusbar = new Statusbar(editor);
                 }, editor);
-                editor.once("unload", function h2(){
+                editor.once("unload", function h2() {
                     if (statusbar) statusbar.unload();
                 }, editor);
             });
@@ -94,12 +94,12 @@ define(function(require, exports, module) {
                 var itmSbWrap = window.itmSbWrap;
                 var itmSbWrapPM = window.itmSbWrapPM;
                 
-                itmSbWrap.on("click", function(){
+                itmSbWrap.on("click", function() {
                     setOption("wrap", itmSbWrap.checked
                         ? itmSbWrapPM.checked ? "printMargin" : true
                         : false);
                 });
-                itmSbWrapPM.on("click", function(){
+                itmSbWrapPM.on("click", function() {
                     setOption("wrap", itmSbWrapPM.checked
                         ? "printMargin"
                         : itmSbWrap.checked);
@@ -121,26 +121,26 @@ define(function(require, exports, module) {
             
             // Menu Tab functionality
             var handlers = [
-                function(){ setOption("useSoftTabs", this.checked) },
-                function(){},
-                function(){ setOption("tabSize", 2) },
-                function(){ setOption("tabSize", 3) },
-                function(){ setOption("tabSize", 4) },
-                function(){ setOption("tabSize", 8) },
-                function(){
+                function() { setOption("useSoftTabs", this.checked); },
+                function() {},
+                function() { setOption("tabSize", 2); },
+                function() { setOption("tabSize", 3); },
+                function() { setOption("tabSize", 4); },
+                function() { setOption("tabSize", 8); },
+                function() {
                     if (!currentSession) return;
                     aceWhitespace.detectIndentation(currentSession.session);
                     currentSession.setOption("guessTabSize", true);
                     currentSession.statusBar.update();
                 },
                 // Tabs to Spaces
-                function(){
+                function() {
                     if (!currentSession) return;
                     aceWhitespace.convertIndentation(currentSession.session, " ");
                     currentSession.statusBar.update();
                 },
                 // Spaces to Tabs
-                function(){
+                function() {
                     if (!currentSession) return;
                     aceWhitespace.convertIndentation(currentSession.session, "\t");
                     currentSession.statusBar.update();
@@ -154,12 +154,12 @@ define(function(require, exports, module) {
                 });
                 
                 var itmTabSize = window.itmTabSize;
-                itmTabSize.on("afterchange", function(){
+                itmTabSize.on("afterchange", function() {
                     setOption("tabSize", this.value);
                     update();
                 });
                 
-                var lut = [0,0,2,3,4,0,0,0,5];
+                var lut = [0, 0, 2, 3, 4, 0, 0, 0, 5];
                 
                 function update(e) {
                     if (e && !e.value)
@@ -183,10 +183,10 @@ define(function(require, exports, module) {
             });
         });
         
-        handle.on("unload", function(){
+        handle.on("unload", function() {
             drawn = false;
             
-            Object.keys(statusbars).forEach(function(name){
+            Object.keys(statusbars).forEach(function(name) {
                 statusbars[name].unload();
             });
             
@@ -199,7 +199,7 @@ define(function(require, exports, module) {
         /***** Methods *****/
         
         var drawn = false;
-        function draw(){
+        function draw() {
             if (drawn) return;
             drawn = true;
             
@@ -207,8 +207,8 @@ define(function(require, exports, module) {
             ui.insertSkin({
                 name: "c9statusbar",
                 data: skin,
-                "media-path" : options.staticPrefix + "/images/",
-                "icon-path"  : options.staticPrefix + "/icons/"
+                "media-path": options.staticPrefix + "/images/",
+                "icon-path": options.staticPrefix + "/icons/"
             }, handle);
         }
         
@@ -216,11 +216,11 @@ define(function(require, exports, module) {
             return statusbars[editor.name];
         }
         
-        function show(){
+        function show() {
             settings.set("user/ace/statusbar/@show", "true");
         }
         
-        function hide(){
+        function hide() {
             settings.set("user/ace/statusbar/@show", "false");
         }
         
@@ -268,11 +268,11 @@ define(function(require, exports, module) {
             statusbars[editor.name] = plugin;
             
             var loaded = false;
-            function load(){
+            function load() {
                 if (loaded) return false;
                 loaded = true;
                 
-                function updateBarVisible(){
+                function updateBarVisible() {
                     if (!settings.getBool("user/ace/statusbar/@show")) {
                         bar && bar.hide();
                         menuItem.enable();
@@ -293,21 +293,21 @@ define(function(require, exports, module) {
                     var doc = e.doc;
                     var session = doc.getSession();
                     session.statusBar = plugin;
-                    session.session.on("changeMode", function(e){ statusUpdate.schedule(); });
+                    session.session.on("changeMode", function(e) { statusUpdate.schedule(); });
                     
                     if (!doc.hasValue())
-                        doc.once("setValue", function(){
+                        doc.once("setValue", function() {
                             statusUpdate.schedule();
                         }, doc);
                 }, plugin);
-                editor.on("documentActivate", function(e){ statusUpdate.schedule(); }, plugin);
+                editor.on("documentActivate", function(e) { statusUpdate.schedule(); }, plugin);
                 editor.on("documentUnload", function(e) {
                     delete e.doc.getSession().statusBar;
                 }, plugin);
             }
             
             var drawn = false;
-            function draw(){
+            function draw() {
                 if (drawn) return;
                 drawn = true;
             
@@ -352,18 +352,18 @@ define(function(require, exports, module) {
                 
                 var mnuSyntax = menus.get("View/Syntax").menu;
                 lblSyntax.setAttribute("submenu", mnuSyntax);
-                lblSyntax.on("mousedown", function(){
+                lblSyntax.on("mousedown", function() {
                     if (editor.activeDocument)
                         tabs.focusTab(editor.activeDocument.tab);
                 });
         
                 // Click behavior for the labels
-                lblSelection.on("click", function(){
+                lblSelection.on("click", function() {
                     showRange = !showRange;
                     updateStatus();
                 });
                 
-                lblRowCol.on("click", function(){
+                lblRowCol.on("click", function() {
                     gotoline.gotoline(null, null, true);
                 });
                 
@@ -371,9 +371,9 @@ define(function(require, exports, module) {
                 var ace = editor.ace;
                 if (!ace.$hasStatusBar) {
                     // Throttle UI updates
-                    ace.on("changeSelection", function() { selStatusUpdate.schedule() });
-                    ace.on("changeStatus", function() { statusUpdate.schedule() });
-                    ace.on("keyboardActivity", function() { statusUpdate.schedule() });
+                    ace.on("changeSelection", function() { selStatusUpdate.schedule(); });
+                    ace.on("changeStatus", function() { statusUpdate.schedule(); });
+                    ace.on("keyboardActivity", function() { statusUpdate.schedule(); });
                     ace.renderer.on("scrollbarVisibilityChanged", function(e, renderer) {
                         bar.$ext.style.right = renderer.scrollBarV.getWidth() + 5 + "px";
                         bar.$ext.style.bottom = renderer.scrollBarH.getHeight() + 3 + "px";
@@ -381,7 +381,7 @@ define(function(require, exports, module) {
                     ace.$hasStatusBar = true;
                     
                     var theme = editor.theme;
-                    setTheme({theme: theme});
+                    setTheme({ theme: theme });
                 }
                 
                 // Update status information
@@ -447,16 +447,16 @@ define(function(require, exports, module) {
             
             /***** Lifecycle *****/
             
-            plugin.on("load", function(){
+            plugin.on("load", function() {
                 load();
             });
-            plugin.on("enable", function(){
+            plugin.on("enable", function() {
                 
             });
-            plugin.on("disable", function(){
+            plugin.on("disable", function() {
                 
             });
-            plugin.on("unload", function(){
+            plugin.on("unload", function() {
                 loaded = false;
             });
             
@@ -479,7 +479,7 @@ define(function(require, exports, module) {
         }
         
         register(null, {
-            "ace.status" : handle
+            "ace.status": handle
         });
     }
 });
